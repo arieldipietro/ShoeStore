@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".screens.InstructionsFragment">
+
+    <!-- using constraint layout so I can have the views floating in the screen-->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/instructions_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/top_back_image"
+        android:paddingLeft="@dimen/fragment_padding"
+        android:paddingTop="@dimen/fragment_padding"
+        android:paddingRight="@dimen/fragment_padding"
+        android:paddingBottom="@dimen/fragment_padding">
+
+        <TextView
+            android:id="@+id/instructions_one"
+            style="@style/text_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="#00FFFFFF"
+            android:text="@string/instruction_one"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            app:layout_constraintBottom_toTopOf="@+id/instructions_two"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread" />
+
+        <TextView
+            android:id="@+id/instructions_two"
+            style="@style/text_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="#00FFFFFF"
+            android:text="@string/instruction_two"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            app:layout_constraintBottom_toTopOf="@+id/get_started_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/instructions_one" />
+
+        <Button
+            android:id="@+id/get_started_button"
+            style="@style/buttons_style"
+            android:layout_width="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/rounded_button_secondary"
+            android:text="@string/lets_get_you_started"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
