@@ -40,12 +40,8 @@ class ShoeListFragment : Fragment() {
         binding.fab.setOnClickListener(Navigation.
         createNavigateOnClickListener(R.id.action_shoeListFragment_to_shoeDetailsFragment))
 
-        //Cuando la app arranca, la lista NO ES NULA, asi que tengo que buscar otro metodo
-        if(oldShoeLayout.childCount == 0 ){
-            binding.emptyListText.setVisibility(View.VISIBLE)
-        } else{
-            binding.emptyListText.setVisibility(View.GONE)
-        }
+        //Checks if the list has some items, otherwise displays a message
+        checkShoesList()
 
         shoeViewModel.shoeListData.observe(viewLifecycleOwner,{
                 for (item in it) {
@@ -64,11 +60,7 @@ class ShoeListFragment : Fragment() {
                     oldShoeLayout.addView(view.root)
                 }
 
-            if(oldShoeLayout.childCount == 0 ){
-                binding.emptyListText.setVisibility(View.VISIBLE)
-            } else{
-                binding.emptyListText.setVisibility(View.GONE)
-            }
+            checkShoesList()
         })
 
         setHasOptionsMenu(true)
@@ -85,6 +77,15 @@ class ShoeListFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return NavigationUI.onNavDestinationSelected(item!!, requireView().findNavController())
         super.onOptionsItemSelected(item)
+    }
+
+    private fun checkShoesList(){
+        if(oldShoeLayout.childCount == 0 ){
+            binding.emptyListText.setVisibility(View.VISIBLE)
+        } else{
+            binding.emptyListText.setVisibility(View.GONE)
+        }
+
     }
 
 
