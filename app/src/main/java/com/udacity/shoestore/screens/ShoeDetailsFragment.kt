@@ -55,6 +55,7 @@ class ShoeDetailsFragment : Fragment() {
             shoe.description.isNotBlank() && shoe.company.isNotBlank() && shoe.images.isNotBlank()
         ) {
             shoeViewModel.addNewShoe(shoe)
+
             findNavController()
                 .navigate(ShoeDetailsFragmentDirections.actionShoeDetailsFragmentToShoeListFragment())
         } else {
@@ -71,7 +72,7 @@ class ShoeDetailsFragment : Fragment() {
                 binding.shoeDescriptionEdit.setError("This field can not be blank")
             }
             if (shoe.images == "") {
-                binding.shoeDescriptionEdit.setError("This field can not be blank")
+                binding.imageUrlEdit.setError("This field can not be blank")
             }
         }
     }

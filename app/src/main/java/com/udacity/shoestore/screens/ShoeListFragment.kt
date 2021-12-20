@@ -1,22 +1,24 @@
 package com.udacity.shoestore.screens
 
+
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
-import android.widget.Toast
 import com.udacity.shoestore.R
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.udacity.shoestore.databinding.ShoeDetailsViewBinding
 import com.udacity.shoestore.databinding.FragmentShoeListBinding
-import com.udacity.shoestore.models.Shoe
 
 class ShoeListFragment : Fragment() {
+
+    private lateinit var binding : FragmentShoeListBinding
+    private lateinit var oldShoeLayout : ViewGroup
+    private lateinit var shoeViewModel : ShoeViewModel
 
 
     override fun onCreateView(
@@ -24,38 +26,48 @@ class ShoeListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val binding: FragmentShoeListBinding = DataBindingUtil.inflate(
+        binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_shoe_list,
             container,
             false
         )
 
-        var oldShoeLayout : ViewGroup = binding.shoeListContainer
+        oldShoeLayout = binding.shoeListContainer
 
-        var shoeViewModel = ViewModelProvider(requireActivity()).get(ShoeViewModel::class.java)
+        shoeViewModel = ViewModelProvider(requireActivity()).get(ShoeViewModel::class.java)
 
         binding.fab.setOnClickListener(Navigation.
         createNavigateOnClickListener(R.id.action_shoeListFragment_to_shoeDetailsFragment))
 
-        if(shoeViewModel.shoeListData == null){
+        //Cuando la app arranca, la lista NO ES NULA, asi que tengo que buscar otro metodo
+        if(oldShoeLayout.childCount == 0 ){
             binding.emptyListText.setVisibility(View.VISIBLE)
+        } else{
+            binding.emptyListText.setVisibility(View.GONE)
         }
 
         shoeViewModel.shoeListData.observe(viewLifecycleOwner,{
-            for(item in it) {
+                for (item in it) {
 
-                val view: ShoeDetailsViewBinding = DataBindingUtil.inflate(
-                    inflater, R.layout.shoe_details_view, container, false
-                )
+                    val view: ShoeDetailsViewBinding = DataBindingUtil.inflate(
+                        inflater, R.layout.shoe_details_view, container, false
+                    )
 
-                view.shoeName.text = item.name
-                view.shoeCompany.text = getString(R.string.company_text_list,item.company)
-                view.shoeSize.text = getString(R.string.shoe_size_list, item.size.toString())
-                view.shoeDescription.text = getString(R.string.description_text_list, item.description)
-                view.shoeImages.text = getString(R.string.images_text_list, item.images)
+                    view.shoeName.text = item.name
+                    view.shoeCompany.text = getString(R.string.company_text_list, item.company)
+                    view.shoeSize.text = getString(R.string.shoe_size_list, item.size.toString())
+                    view.shoeDescription.text =
+                        getString(R.string.description_text_list, item.description)
+                    view.shoeImages.text = getString(R.string.images_text_list, item.images)
 
-                oldShoeLayout.addView(view.root)
+                    oldShoeLayout.addView(view.root)
+                }
+
+            if(oldShoeLayout.childCount == 0 ){
+                binding.emptyListText.setVisibility(View.VISIBLE)
+            } else{
+                binding.emptyListText.setVisibility(View.GONE)
             }
         })
 
@@ -74,6 +86,9 @@ class ShoeListFragment : Fragment() {
         return NavigationUI.onNavDestinationSelected(item!!, requireView().findNavController())
         super.onOptionsItemSelected(item)
     }
+
+
+
 
 }
 
